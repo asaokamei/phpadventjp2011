@@ -9,6 +9,7 @@ $val  = localStorage::loadPost( 'valID' );
  * and open the template in the editor.
  */
 ?>
+<!DOCTYPE html>  
 <html lang="ja">
     <head>
         <meta charset="utf-8" />

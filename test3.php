@@ -10,6 +10,7 @@ $js2  = localStorage::loadStorage( 'valID' );
  * and open the template in the editor.
  */
 ?>
+<!DOCTYPE html>  
 <html lang="ja">
     <head>
         <meta charset="utf-8" />
@@ -23,6 +24,7 @@ $js2  = localStorage::loadStorage( 'valID' );
             <pre>
                 require_once './localStorage.php';
                 $js   = localStorage::loadStorage( 'testID' );
+                $js2  = localStorage::loadStorage( 'valID' );
             </pre>
             <p>setting following javascript in this form.</p>
             <pre><?php echo htmlspecialchars( $js, ENT_QUOTES ); ?></pre>
