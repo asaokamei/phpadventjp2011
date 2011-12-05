@@ -3,7 +3,6 @@
 
 class localStorage
 {
-    const ENCODE_NONE         = 'none'; 
     const ENCODE_JSON         = 'json';
     public static $save_id    = 'saveID_';  // 
     public static $encode_id  = '_EncType_'; 
@@ -65,9 +64,14 @@ class localStorage
         switch( $encode )
         {
             case self::ENCODE_JSON:
-                $en_data = json_encode( $data );
+                if( is_array( $data ) ) {
+                    array_walk( $data, function(&$v){$v=addslashes($v);});
+                }
+                else {
+                    $data = addslashes( $data );
+                }
+                $en_data = json_encode( $data ) ;
                 break;
-            case self::ENCODE_NONE:
             default:
                 $se_data = serialize( $data );
                 $en_data = $se_data;
@@ -81,9 +85,8 @@ class localStorage
         switch( $encode )
         {
             case self::ENCODE_JSON:
-                $un_data = json_decode( stripslashes( $data ) );
+                $un_data = json_decode( $data, TRUE );
                 break;
-            case self::ENCODE_NONE:
             default:
                 $de_data = $data;
                 $un_data = unserialize( $de_data );

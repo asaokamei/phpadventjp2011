@@ -1,11 +1,9 @@
 <?php
 require_once './localStorage.php';
 
-$data = array( 'test'=>'test', 'more'=>'more' );
+$data = array( 'test'=>'test', 'more'=>'alert("HI/hi");' );
 $js   = localStorage::saveStorage( $data, 'testID' );
-
-$data = 'just value';
-$js2  = localStorage::saveStorage( $data, 'valID' );
+$js2  = localStorage::saveStorage( 'just value', 'valID' );
 
 ?>
 <!DOCTYPE html>  
@@ -19,8 +17,9 @@ $js2  = localStorage::saveStorage( $data, 'valID' );
         <p>PHP code is:</p>
         <pre>
             require_once './localStorage.php';
-            $data = array( 'test'=>'test', 'more'=>'more' );
+            $data = array( 'test'=>'test', 'more'=>'alert("HI/hi");' );
             $js   = localStorage::saveStorage( $data, 'testID' );
+            $js2  = localStorage::saveStorage( 'just value', 'valID' );
         </pre>
         <p>setting following javaScript:</p>
         <pre><?php echo htmlspecialchars( $js, ENT_QUOTES ); ?></pre>
