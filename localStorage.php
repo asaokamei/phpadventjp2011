@@ -59,39 +59,19 @@ class localStorage
     // +--------------------------------------------------------------- +
     static function encodeData( $data, $encode=NULL )
     {
-        // encoding $data; $data can be an array
-        // returns a seriarized string data.
-        switch( $encode )
-        {
-            case self::ENCODE_JSON:
-                if( is_array( $data ) ) {
-                    array_walk( $data, function(&$v){$v=addslashes($v);});
-                }
-                else {
-                    $data = addslashes( $data );
-                }
-                $en_data = json_encode( $data ) ;
-                break;
-            default:
-                $se_data = serialize( $data );
-                $en_data = $se_data;
-                break;
+        if( is_array( $data ) ) {
+            array_walk( $data, function(&$v){$v=addslashes($v);});
         }
+        else {
+            $data = addslashes( $data );
+        }
+        $en_data = json_encode( $data ) ;
         return $en_data;
     }
     // +--------------------------------------------------------------- +
     static function decodeData( $data, $encode=NULL )
     {
-        switch( $encode )
-        {
-            case self::ENCODE_JSON:
-                $un_data = json_decode( $data, TRUE );
-                break;
-            default:
-                $de_data = $data;
-                $un_data = unserialize( $de_data );
-                break;
-        }
+        $un_data = json_decode( $data, TRUE );
         return $un_data;
     }
     // +--------------------------------------------------------------- +
