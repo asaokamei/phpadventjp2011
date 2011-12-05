@@ -4,8 +4,6 @@
 class localStorage
 {
     const ENCODE_NONE         = 'none'; 
-    const ENCODE_BASE64       = 'base64'; 
-    const ENCODE_CRYPT        = 'crypt';
     const ENCODE_JSON         = 'json';
     public static $save_id    = 'saveID_';  // 
     public static $encode_id  = '_EncType_'; 
@@ -69,28 +67,6 @@ class localStorage
             case self::ENCODE_JSON:
                 $en_data = json_encode( $data );
                 break;
-            case self::ENCODE_BASE64:
-                $se_data = serialize( $data );
-                $en_data = base64_encode( $se_data );
-                break;
-            case self::ENCODE_CRYPT:
-                if( !function_exists( 'mcrypt_encrypt' ) ) {
-                    throw new Exception( 'mcrypt not installed @' . __CLASS__ , 9999 );
-                }
-                // from: http://jp.php.net/manual/ja/function.mcrypt-encrypt.php
-                $se_data = serialize( $data );
-                $en_data = 
-                    trim( base64_encode( mcrypt_encrypt( 
-                        MCRYPT_RIJNDAEL_256, 
-                        self::$crypt_pswd, 
-                        $se_data, 
-                        MCRYPT_MODE_ECB, 
-                        mcrypt_create_iv( 
-                            mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB ), 
-                            MCRYPT_RAND
-                        )
-                    ) ) ); 
-                break;
             case self::ENCODE_NONE:
             default:
                 $se_data = serialize( $data );
@@ -106,28 +82,6 @@ class localStorage
         {
             case self::ENCODE_JSON:
                 $un_data = json_decode( stripslashes( $data ) );
-                break;
-            case self::ENCODE_BASE64:
-                $de_data = base64_decode( $data );
-                $un_data = unserialize( $de_data );
-                break;
-            case self::ENCODE_CRYPT:
-                if( !function_exists( 'mcrypt_decrypt' ) ) {
-                    throw new Exception( 'mcrypt not installed @' . __CLASS__ , 9999 );
-                }
-                // from: http://jp.php.net/manual/ja/function.mcrypt-encrypt.php
-                $de_data = 
-                    trim( mcrypt_decrypt(
-                        MCRYPT_RIJNDAEL_256, 
-                        self::$crypt_pswd, 
-                        base64_decode( $data ), 
-                        MCRYPT_MODE_ECB, 
-                        mcrypt_create_iv(
-                            mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB ), 
-                            MCRYPT_RAND
-                        )
-                    ) ); 
-                $un_data = unserialize( $de_data );
                 break;
             case self::ENCODE_NONE:
             default:
