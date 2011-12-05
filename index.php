@@ -4,7 +4,7 @@ require_once './localStorage.php';
 $data = array( 'test'=>'test', 'more'=>'more' );
 $js   = localStorage::saveStorage( $data, 'testID' );
 
-$data = 'justValue';
+$data = 'just value';
 $js2  = localStorage::saveStorage( $data, 'valID' );
 
 ?>
